@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from jsonsocket import Client
-from datetime import time, datetime
+from datetime import datetime
 from time import sleep
 
 host = '127.0.0.1'
@@ -36,9 +36,10 @@ def setBrightness(newBrightness):
     sleep(0.5)
     client.close()
 
+
 while True:
     t = datetime.now()
-    shouldBeInDimmingMode = not (dimmingStartHour > t.hour > dimmingEndHour)
+    shouldBeInDimmingMode = not (dimmingStartHour > t.hour >= dimmingEndHour)  # assumes the dimming hours span midnight
     if inDimmingMode and not shouldBeInDimmingMode:
         try:
             setBrightness(nonDimmedBrightness)
