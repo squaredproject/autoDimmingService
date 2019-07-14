@@ -1,0 +1,9 @@
+[Unit]
+Description=2squared Autodimmer
+
+[Service]
+ExecStart=python /home/squared/autoDimmingService/squaredDimmingService.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
