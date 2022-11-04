@@ -16,7 +16,7 @@ inDimmingMode = False
 
 
 def setBrightness(newBrightness):
-    print "setting Brightness to %s" % newBrightness
+    print("setting Brightness to %s" % newBrightness)
     client.connect(host, port)
     client.send(
         {
@@ -40,20 +40,27 @@ def setBrightness(newBrightness):
 while True:
     t = datetime.now()
     shouldBeInDimmingMode = not (dimmingStartHour > t.hour >= dimmingEndHour)  # assumes the dimming hours span midnight
-    if inDimmingMode and not shouldBeInDimmingMode:
+    print(f'inDimmingMode {inDimmingMode} shouldBeInDimmingMode {shouldBeInDimmingMode}')
+    if inDimmingMode and not shouldBeInDimmingMode: 
         try:
             setBrightness(nonDimmedBrightness)
             inDimmingMode = False
-            print "Success"
+            print("Success")
         except Exception as e:
-            print "Error changing brightness"
-            print e.message
+            print("Error changing brightness")
+            if hasattr(e, 'message'):
+                print(e.message)
+            else:
+                print(e)
     if not inDimmingMode and shouldBeInDimmingMode:
         try:
             setBrightness(dimmedBrightness)
             inDimmingMode = True
-            print "Success"
+            print("Success")
         except Exception as e:
-            print "Error changing brightness"
-            print e.message
+            print("Error changing brightness")
+            if hasattr(e, 'message'):
+                print(e.message)
+            else:
+                print(e)
     sleep(60)

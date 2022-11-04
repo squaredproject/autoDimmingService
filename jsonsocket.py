@@ -107,20 +107,21 @@ class Client(object):
 def _send(socket, data):
   try:
     serialized = json.dumps(data)
-  except (TypeError, ValueError), e:
+  except (TypeError, ValueError) as e:
     raise Exception('You can only send JSON-serializable data')
-  socket.sendall(serialized)
-  socket.send('\n')
+#  print(f'serialized type {type(serialized)}')
+  b = bytes( serialized + '\n', 'ascii')
+  socket.sendall(b)
 
 def _recv(socket):
   # read the length of the data, letter by letter until we reach EOL
   data_in = ''
-  char = socket.recv(1)
+  char = socket.recv(1).decode('ascii')
   while char != '\n':
     data_in += char
-    char = socket.recv(1)
+    char = socket.recv(1).decode('ascii')
   try:
     deserialized = json.loads(data_in)
-  except (TypeError, ValueError), e:
+  except (TypeError, ValueError) as e:
     raise Exception('Data received was not in JSON format')
   return deserialized
