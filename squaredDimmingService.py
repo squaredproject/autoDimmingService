@@ -6,9 +6,9 @@ from time import sleep
 
 host = '127.0.0.1'
 port = 5204
-dimmingStartHour =  7
-dimmingEndHour = 8
-dimmedBrightness = 1
+dimmingStartHour =  23
+dimmingEndHour = 16
+dimmedBrightness = 0
 nonDimmedBrightness = 1
 
 client = Client()
